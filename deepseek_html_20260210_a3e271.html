@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pembuat iQC/Chat iPhone</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        :root {
+            --primary: #007AFF;
+            --primary-dark: #0056CC;
+            --primary-light: rgba(0, 122, 255, 0.1);
+            --secondary: #5856D6;
+            --light: #F5F5F7;
+            --dark: #1D1D1F;
+            --gray: #8E8E93;
+            --gray-light: #C7C7CC;
+            --success: #34C759;
+            --border: #E5E5EA;
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+        
+        body {
+            background-color: var(--light);
+            min-height: 100vh;
+            color: var(--dark);
+            padding: 20px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 122, 255, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(88, 86, 214, 0.05) 0%, transparent 20%);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Header Styles */
+        header {
+            text-align: center;
+            padding: 40px 0 30px;
+            margin-bottom: 20px;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .header-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .logo-icon {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            width: 80px;
+            height: 80px;
+            border-radius: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 25px rgba(0, 122, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .logo-icon::before {
+            content: '';
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+            top: -25%;
+            left: -25%;
+        }
+        
+        .logo-icon i {
+            font-size: 36px;
+            color: white;
+            z-index: 1;
+        }
+        
+        .logo-text h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.1;
+            text-align: left;
+            letter-spacing: -0.5px;
+        }
+        
+        .logo-text p {
+            font-size: 1.1rem;
+            color: var(--gray);
+            text-align: left;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+        
+        .tagline {
+            font-size: 1.3rem;
+            color: var(--dark);
+            max-width: 700px;
+            line-height: 1.6;
+            font-weight: 500;
+            padding: 0 20px;
+            text-align: center;
+        }
+        
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 35px;
+            margin-bottom: 50px;
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @media (max-width: 900px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Control Panel */
+        .control-panel {
+            background-color: white;
+            border-radius: 28px;
+            padding: 40px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--border);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .control-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+        
+        .control-panel:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+        }
+        
+        .panel-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .panel-header i {
+            color: var(--primary);
+            font-size: 1.5rem;
+            background-color: var(--primary-light);
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .panel-header h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 28px;
+            position: relative;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 12px;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .form-group label i {
+            color: var(--primary);
+            width: 22px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 18px 20px;
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background-color: white;
+            color: var(--dark);
+            font-weight: 500;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.15);
+        }
+        
+        .form-control::placeholder {
+            color: var(--gray-light);
+            font-weight: normal;
+        }
+        
+        textarea.form-control {
+            min-height: 160px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+        
+        .input-note {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-top: 8px;
+            display: block;
+            font-style: italic;
+        }
+        
+        /* Button Styles */
+        .button-group {
+            display: flex;
+            gap: 18px;
+            margin-top: 40px;
+        }
+        
+        .btn {
+            padding: 18px 28px;
+            border-radius: 16px;
+            border: none;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            flex: 1;
+            letter-spacing: 0.2px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            box-shadow: 0 6px 20px rgba(0, 122, 255, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 25px rgba(0, 122, 255, 0.4);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(-1px);
+        }
+        
+        .btn-secondary {
+            background-color: white;
+            color: var(--primary);
+            border: 2px solid var(--border);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #F9F9FB;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+        
+        /* Preview Panel */
+        .preview-panel {
+            background-color: white;
+            border-radius: 28px;
+            padding: 40px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .preview-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, var(--secondary) 0%, var(--primary) 100%);
+        }
+        
+        .preview-container {
+            flex: 1;
+            background-color: #F9F9FB;
+            border-radius: 22px;
+            padding: 35px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            min-height: 480px;
+            border: 2px dashed var(--border);
+            transition: all 0.4s;
+        }
+        
+        .preview-container.has-content {
+            border-style: solid;
+            border-color: var(--primary);
+            background: linear-gradient(145deg, #ffffff 0%, #F9F9FB 100%);
+            box-shadow: inset 0 4px 12px rgba(0, 0, 0, 0.04);
+        }
+        
+        .preview-placeholder {
+            text-align: center;
+            color: var(--gray);
+            max-width: 320px;
+            padding: 20px;
+        }
+        
+        .preview-placeholder i {
+            font-size: 5rem;
+            margin-bottom: 25px;
+            opacity: 0.8;
+            color: var(--primary);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .preview-placeholder h3 {
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+            font-weight: 700;
+        }
+        
+        .preview-placeholder p {
+            line-height: 1.6;
+            font-size: 1rem;
+            color: var(--gray);
+        }
+        
+        /* iPhone Preview */
+        .iphone-frame {
+            width: 340px;
+            max-width: 100%;
+            background-color: #000;
+            border-radius: 45px;
+            padding: 25px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            position: relative;
+            border: 12px solid #1D1D1F;
+            display: none;
+            animation: scaleIn 0.5s ease-out;
+        }
+        
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 18px 8px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+        
+        .status-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .status-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .battery {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.9rem;
+        }
+        
+        .chat-container {
+            background-color: #000;
+            padding: 25px;
+            border-radius: 25px;
+            margin-top: 15px;
+            min-height: 340px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .chat-bubble {
+            background-color: #2B2B2E;
+            color: white;
+            padding: 22px;
+            border-radius: 25px;
+            border-bottom-left-radius: 8px;
+            max-width: 88%;
+            word-wrap: break-word;
+            line-height: 1.6;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .chat-time {
+            font-size: 0.9rem;
+            color: #AEAEB2;
+            margin-top: 10px;
+            text-align: right;
+            font-weight: 500;
+        }
+        
+        /* Loading Spinner */
+        .loading-spinner {
+            display: none;
+            width: 70px;
+            height: 70px;
+            border: 6px solid rgba(0, 122, 255, 0.1);
+            border-top: 6px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 30px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Result Image */
+        .result-image {
+            max-width: 100%;
+            border-radius: 20px;
+            display: none;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            border: 1px solid var(--border);
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        /* Download Button */
+        .download-btn {
+            width: 100%;
+            display: none;
+            margin-top: 25px;
+        }
+        
+        /* Success Message */
+        .success-message {
+            background: linear-gradient(135deg, #34C759 0%, #30B453 100%);
+            color: white;
+            padding: 16px 22px;
+            border-radius: 14px;
+            margin-top: 20px;
+            display: none;
+            align-items: center;
+            gap: 12px;
+            animation: slideIn 0.4s ease-out;
+            box-shadow: 0 4px 12px rgba(52, 199, 89, 0.3);
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .success-message i {
+            font-size: 1.3rem;
+        }
+        
+        /* Error Message */
+        .error-message {
+            background: linear-gradient(135deg, #FF3B30 0%, #D70015 100%);
+            color: white;
+            padding: 16px 22px;
+            border-radius: 14px;
+            margin-top: 20px;
+            display: none;
+            align-items: center;
+            gap: 12px;
+            animation: slideIn 0.4s ease-out;
+            box-shadow: 0 4px 12px rgba(255, 59, 48, 0.3);
+        }
+        
+        .error-message i {
+            font-size: 1.3rem;
+        }
+        
+        /* Features Section */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 28px;
+            margin-top: 50px;
+            animation: fadeInUp 1.2s ease-out;
+        }
+        
+        .feature-card {
+            background-color: white;
+            border-radius: 22px;
+            padding: 35px 30px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-icon {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            width: 70px;
+            height: 70px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 20px rgba(0, 122, 255, 0.25);
+        }
+        
+        .feature-icon i {
+            font-size: 28px;
+            color: white;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+            font-weight: 700;
+        }
+        
+        .feature-card p {
+            color: var(--gray);
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 70px;
+            color: var(--gray);
+            border-top: 1px solid var(--border);
+            font-size: 0.95rem;
+            animation: fadeIn 1.5s ease-out;
+        }
+        
+        .heart {
+            color: #FF3B30;
+            display: inline-block;
+            animation: heartbeat 1.5s infinite;
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            5% { transform: scale(1.2); }
+            10% { transform: scale(1); }
+            15% { transform: scale(1.2); }
+            20% { transform: scale(1); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                gap: 15px;
+            }
+            
+            .logo-container {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .logo-text h1, .logo-text p {
+                text-align: center;
+            }
+            
+            .logo-text h1 {
+                font-size: 2.5rem;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+            
+            .control-panel, .preview-panel {
+                padding: 30px;
+            }
+            
+            .panel-header h2 {
+                font-size: 1.6rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 15px;
+            }
+            
+            .logo-icon {
+                width: 70px;
+                height: 70px;
+            }
+            
+            .logo-text h1 {
+                font-size: 2rem;
+            }
+            
+            .tagline {
+                font-size: 1.1rem;
+            }
+            
+            .control-panel, .preview-panel {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="logo-container">
+                    <div class="logo-icon">
+                        <i class="fas fa-message"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>Pembuat iQC iPhone</h1>
+                        <p>Generator Gambar Chat iPhone Realistis</p>
+                    </div>
+                </div>
+                <p class="tagline">Buat gambar percakapan iPhone yang realistis dengan mudah. Hasilkan gambar berkualitas tinggi yang siap diunduh dan dibagikan ke media sosial.</p>
+            </div>
+        </header>
+        
+        <main>
+            <div class="main-content">
+                <!-- Control Panel -->
+                <div class="control-panel">
+                    <div class="panel-header">
+                        <i class="fas fa-sliders-h"></i>
+                        <h2>Kontrol Pembuatan iQC</h2>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="messageText">
+                            <i class="fas fa-comment-dots"></i>
+                            Teks Pesan
+                        </label>
+                        <textarea 
+                            id="messageText" 
+                            class="form-control" 
+                            placeholder="Masukkan teks pesan percakapan Anda di sini..."
+                        ></textarea>
+                        <span class="input-note">Teks ini akan muncul di dalam bubble chat iPhone</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="time">
+                            <i class="fas fa-clock"></i>
+                            Waktu Status Bar
+                        </label>
+                        <input 
+                            type="text" 
+                            id="time" 
+                            class="form-control" 
+                            placeholder="Contoh: 14:30"
+                        >
+                        <span class="input-note">Waktu yang ditampilkan di status bar iPhone (format 24 jam)</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="battery">
+                            <i class="fas fa-battery-full"></i>
+                            Persentase Baterai
+                        </label>
+                        <input 
+                            type="number" 
+                            id="battery" 
+                            class="form-control" 
+                            placeholder="Contoh: 99"
+                            min="0"
+                            max="100"
+                            value="99"
+                        >
+                        <span class="input-note">Persentase baterai yang ditampilkan di status bar (0-100)</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="provider">
+                            <i class="fas fa-wifi"></i>
+                            Provider Jaringan
+                        </label>
+                        <input 
+                            type="text" 
+                            id="provider" 
+                            class="form-control" 
+                            placeholder="Contoh: Telkomsel"
+                            value="Telkomsel"
+                        >
+                        <span class="input-note">Nama provider jaringan yang ditampilkan di status bar</span>
+                    </div>
+                    
+                    <div class="error-message" id="errorMessage">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span id="errorText">Terjadi kesalahan. Silakan coba lagi.</span>
+                    </div>
+                    
+                    <div class="success-message" id="successMessage">
+                        <i class="fas fa-check-circle"></i>
+                        <span id="successText">Gambar berhasil dibuat! Klik tombol "Unduh Gambar" untuk menyimpannya.</span>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button class="btn btn-primary" id="generateBtn">
+                            <i class="fas fa-bolt"></i> Hasilkan iQC
+                        </button>
+                        <button class="btn btn-secondary" id="resetBtn">
+                            <i class="fas fa-eraser"></i> Reset Form
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Preview Panel -->
+                <div class="preview-panel">
+                    <div class="panel-header">
+                        <i class="fas fa-eye"></i>
+                        <h2>Pratinjau & Hasil</h2>
+                    </div>
+                    
+                    <div class="preview-container" id="previewContainer">
+                        <!-- Preview placeholder sebelum gambar dibuat -->
+                        <div id="previewPlaceholder" class="preview-placeholder">
+                            <i class="fas fa-mobile-screen"></i>
+                            <h3>Pratinjau iQC Anda</h3>
+                            <p>Isi semua field di form sebelah kiri, lalu klik tombol "Hasilkan iQC" untuk membuat gambar percakapan iPhone yang realistis.</p>
+                        </div>
+                        
+                        <!-- iPhone frame untuk preview live -->
+                        <div id="iphonePreview" class="iphone-frame">
+                            <div class="status-bar">
+                                <div class="status-left">
+                                    <span id="previewProvider">Telkomsel</span>
+                                </div>
+                                <div id="previewTime">14:30</div>
+                                <div class="status-right">
+                                    <div class="battery">
+                                        <span id="previewBattery">99</span>%
+                                        <i class="fas fa-battery-full"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="chat-container">
+                                <div class="chat-bubble">
+                                    <div id="previewMessageText">Teks pesan akan muncul di sini...</div>
+                                    <div class="chat-time" id="previewChatTime">baru saja</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Loading spinner -->
+                        <div class="loading-spinner" id="loadingSpinner"></div>
+                        
+                        <!-- Hasil gambar dari API akan ditampilkan di sini -->
+                        <img id="resultImage" class="result-image" alt="Hasil iQC">
+                    </div>
+                    
+                    <button class="btn btn-primary download-btn" id="downloadBtn">
+                        <i class="fas fa-download"></i> Unduh Gambar
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Features Section -->
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Hasilkan Instan</h3>
+                    <p>Buat gambar iQC iPhone hanya dalam hitungan detik dengan mengisi form sederhana.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    <h3>Kualitas HD</h3>
+                    <p>Hasilkan gambar dengan kualitas tinggi yang cocok untuk media sosial dan presentasi.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Realistis</h3>
+                    <p>Tampilan chat iPhone yang autentik dengan detail status bar lengkap dan akurat.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-share-alt"></i>
+                    </div>
+                    <h3>Mudah Dibagikan</h3>
+                    <p>Unduh dan bagikan gambar hasil ke WhatsApp, Instagram, TikTok, dan platform lainnya.</p>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>Dibuat dengan <span class="heart"><i class="fas fa-heart"></i></span> menggunakan API FikMyDomains</p>
+            <p>© 2023 Pembuat iQC iPhone. Semua hak dilindungi.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elemen DOM
+            const messageTextInput = document.getElementById('messageText');
+            const timeInput = document.getElementById('time');
+            const batteryInput = document.getElementById('battery');
+            const providerInput = document.getElementById('provider');
+            const generateBtn = document.getElementById('generateBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const previewPlaceholder = document.getElementById('previewPlaceholder');
+            const previewContainer = document.getElementById('previewContainer');
+            const iphonePreview = document.getElementById('iphonePreview');
+            const resultImage = document.getElementById('resultImage');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            const errorMessage = document.getElementById('errorMessage');
+            const errorText = document.getElementById('errorText');
+            const successMessage = document.getElementById('successMessage');
+            const successText = document.getElementById('successText');
+            
+            // Elemen pratinjau
+            const previewMessageText = document.getElementById('previewMessageText');
+            const previewTime = document.getElementById('previewTime');
+            const previewBattery = document.getElementById('previewBattery');
+            const previewProvider = document.getElementById('previewProvider');
+            const previewChatTime = document.getElementById('previewChatTime');
+            
+            // Update pratinjau live saat input berubah
+            messageTextInput.addEventListener('input', updatePreview);
+            timeInput.addEventListener('input', updatePreview);
+            batteryInput.addEventListener('input', updatePreview);
+            providerInput.addEventListener('input', updatePreview);
+            
+            // Fungsi untuk memperbarui pratinjau
+            function updatePreview() {
+                const messageText = messageTextInput.value.trim();
+                const time = timeInput.value.trim();
+                const battery = batteryInput.value.trim();
+                const provider = providerInput.value.trim();
+                
+                if (messageText || time || battery || provider) {
+                    previewContainer.classList.add('has-content');
+                } else {
+                    previewContainer.classList.remove('has-content');
+                }
+                
+                previewMessageText.textContent = messageText || "Teks pesan akan muncul di sini...";
+                previewTime.textContent = time || "14:30";
+                previewBattery.textContent = battery || "99";
+                previewProvider.textContent = provider || "Telkomsel";
+                
+                // Update waktu chat secara dinamis
+                if (time) {
+                    previewChatTime.textContent = time;
+                } else {
+                    previewChatTime.textContent = "baru saja";
+                }
+            }
+            
+            // Fungsi untuk menghasilkan gambar iQC dari API
+            async function generateIQC() {
+                // Validasi input
+                if (!messageTextInput.value.trim()) {
+                    showError('Harap masukkan teks pesan.');
+                    messageTextInput.focus();
+                    return;
+                }
+                
+                if (!timeInput.value.trim()) {
+                    showError('Harap masukkan waktu status bar.');
+                    timeInput.focus();
+                    return;
+                }
+                
+                if (!batteryInput.value.trim()) {
+                    showError('Harap masukkan persentase baterai.');
+                    batteryInput.focus();
+                    return;
+                }
+                
+                const batteryValue = parseInt(batteryInput.value);
+                if (isNaN(batteryValue) || batteryValue < 0 || batteryValue > 100) {
+                    showError('Persentase baterai harus antara 0 dan 100.');
+                    batteryInput.focus();
+                    return;
+                }
+                
+                if (!providerInput.value.trim()) {
+                    showError('Harap masukkan provider jaringan.');
+                    providerInput.focus();
+                    return;
+                }
+                
+                // Sembunyikan elemen dan tampilkan loading
+                previewPlaceholder.style.display = 'none';
+                iphonePreview.style.display = 'none';
+                resultImage.style.display = 'none';
+                loadingSpinner.style.display = 'block';
+                downloadBtn.style.display = 'none';
+                hideError();
+                hideSuccess();
+                
+                // Bangun URL API dengan parameter
+                const baseUrl = "https://api.fikmydomainsz.xyz/imagecreator/iqc";
+                const time = encodeURIComponent(timeInput.value.trim());
+                const battery = encodeURIComponent(batteryInput.value.trim());
+                const messageText = encodeURIComponent(messageTextInput.value.trim());
+                const provider = encodeURIComponent(providerInput.value.trim());
+                
+                const apiUrl = `${baseUrl}?time=${time}&battery=${battery}&messageText=${messageText}&provider=${provider}`;
+                
+                try {
+                    // Menggunakan fetch untuk mendapatkan gambar dari API
+                    const response = await fetch(apiUrl);
+                    
+                    if (!response.ok) {
+                        throw new Error(`API mengembalikan status ${response.status}. Pastikan semua parameter diisi dengan benar.`);
+                    }
+                    
+                    // Konversi respons ke blob (gambar)
+                    const imageBlob = await response.blob();
+                    
+                    // Periksa jika respons adalah gambar
+                    if (!imageBlob.type.startsWith('image/')) {
+                        throw new Error('Respons dari API bukan gambar. Periksa parameter yang dimasukkan.');
+                    }
+                    
+                    // Buat URL objek untuk gambar
+                    const imageUrl = URL.createObjectURL(imageBlob);
+                    
+                    // Tampilkan gambar hasil
+                    resultImage.onload = function() {
+                        loadingSpinner.style.display = 'none';
+                        resultImage.style.display = 'block';
+                        downloadBtn.style.display = 'flex';
+                        showSuccess('Gambar berhasil dibuat! Klik tombol "Unduh Gambar" untuk menyimpannya.');
+                    };
+                    
+                    resultImage.src = imageUrl;
+                    
+                    // Simpan URL gambar untuk diunduh nanti
+                    resultImage.dataset.downloadUrl = imageUrl;
+                    
+                } catch (error) {
+                    console.error('Error generating iQC:', error);
+                    loadingSpinner.style.display = 'none';
+                    
+                    // Jika API gagal, tampilkan pratinjau iPhone sebagai alternatif
+                    previewPlaceholder.style.display = 'none';
+                    iphonePreview.style.display = 'block';
+                    downloadBtn.style.display = 'flex';
+                    
+                    showError(`API sedang tidak dapat diakses. Menampilkan pratinjau alternatif. Anda masih dapat mengunduh gambar menggunakan tangkapan layar.`);
+                }
+            }
+            
+            // Fungsi untuk mengunduh gambar
+            function downloadImage() {
+                // Jika kita memiliki gambar dari API
+                if (resultImage.style.display === 'block' && resultImage.dataset.downloadUrl) {
+                    const link = document.createElement('a');
+                    link.href = resultImage.dataset.downloadUrl;
+                    link.download = `iqc-iphone-${Date.now()}.png`;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    
+                    showSuccess('Gambar berhasil diunduh!');
+                } 
+                // Jika kita hanya memiliki pratinjau iPhone (API gagal)
+                else if (iphonePreview.style.display === 'block') {
+                    // Gunakan html2canvas untuk menangkap pratinjau sebagai gambar
+                    if (typeof html2canvas !== 'undefined') {
+                        html2canvas(iphonePreview).then(canvas => {
+                            const link = document.createElement('a');
+                            link.href = canvas.toDataURL('image/png');
+                            link.download = `iqc-preview-${Date.now()}.png`;
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+                            
+                            showSuccess('Gambar pratinjau berhasil diunduh!');
+                        });
+                    } else {
+                        // Jika html2canvas tidak tersedia, minta pengguna mengambil screenshot manual
+                        showError('Untuk mengunduh pratinjau, silakan ambil tangkapan layar manual (screenshot) dari pratinjau di atas. Gunakan shortcut Ctrl+Shift+S (Windows) atau Cmd+Shift+4 (Mac).');
+                    }
+                }
+            }
+            
+            // Fungsi untuk mereset form - mengosongkan semua field
+            function resetForm() {
+                messageTextInput.value = '';
+                timeInput.value = '';
+                batteryInput.value = '99';
+                providerInput.value = 'Telkomsel';
+                
+                // Reset tampilan
+                previewPlaceholder.style.display = 'block';
+                iphonePreview.style.display = 'none';
+                resultImage.style.display = 'none';
+                downloadBtn.style.display = 'none';
+                loadingSpinner.style.display = 'none';
+                previewContainer.classList.remove('has-content');
+                hideError();
+                hideSuccess();
+                
+                // Update pratinjau ke default
+                updatePreview();
+                
+                // Fokus ke input pertama
+                messageTextInput.focus();
+            }
+            
+            // Fungsi untuk menampilkan pesan error
+            function showError(message) {
+                errorText.textContent = message;
+                errorMessage.style.display = 'flex';
+                successMessage.style.display = 'none';
+                
+                // Sembunyikan error setelah 6 detik
+                setTimeout(hideError, 6000);
+            }
+            
+            // Fungsi untuk menyembunyikan pesan error
+            function hideError() {
+                errorMessage.style.display = 'none';
+            }
+            
+            // Fungsi untuk menampilkan pesan sukses
+            function showSuccess(message) {
+                successText.textContent = message;
+                successMessage.style.display = 'flex';
+                errorMessage.style.display = 'none';
+                
+                // Sembunyikan sukses setelah 5 detik
+                setTimeout(hideSuccess, 5000);
+            }
+            
+            // Fungsi untuk menyembunyikan pesan sukses
+            function hideSuccess() {
+                successMessage.style.display = 'none';
+            }
+            
+            // Event listeners untuk tombol
+            generateBtn.addEventListener('click', generateIQC);
+            resetBtn.addEventListener('click', resetForm);
+            downloadBtn.addEventListener('click', downloadImage);
+            
+            // Inisialisasi pratinjau awal
+            updatePreview();
+            
+            // Tambahkan html2canvas untuk fallback jika API tidak berfungsi
+            const script = document.createElement('script');
+            script.src = 'https://html2canvas.hertzen.com/dist/html2canvas.min.js';
+            document.head.appendChild(script);
+            
+            // Tambahkan event listener untuk Enter key pada input
+            [messageTextInput, timeInput, batteryInput, providerInput].forEach(input => {
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        generateIQC();
+                    }
+                });
+            });
+            
+            // Animasi halus untuk elemen saat halaman dimuat
+            setTimeout(() => {
+                document.querySelector('.control-panel').style.opacity = '1';
+                document.querySelector('.preview-panel').style.opacity = '1';
+            }, 100);
+            
+            // Set opacity awal untuk animasi
+            document.querySelector('.control-panel').style.opacity = '0';
+            document.querySelector('.preview-panel').style.opacity = '0';
+            document.querySelector('.control-panel').style.transition = 'opacity 0.5s ease';
+            document.querySelector('.preview-panel').style.transition = 'opacity 0.5s ease';
+            
+            // Set nilai default untuk input
+            timeInput.value = '14:30';
+        });
+    </script>
+</body>
+</html>
